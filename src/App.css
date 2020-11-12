@@ -41,8 +41,11 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 .image-card{
-  margin: 0 2%;
-  height: 5rem;
+  margin: 1rem 2%;
+}
+.image-card img{
+  height: 16rem;
+  width: 100%;
 }
 .image-captions{
   display: none;

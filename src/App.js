@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import axios from 'axios';
+import Header from './header';
+import Search from './search';
+import ImgList from './imglist';
 
 function App() {
+  const [search, setSearch] = React.useState('');
+  const [imgList, setImgList] = React.useState([]);
+
+  const handleSearch = ev => {
+    setSearch(ev.currentTarget.previousElementSibling.value);
+  }
+
+  React.useEffect(() => {
+    axios.get(`https://www.alamy.com/xml-search-results.asp?qt=${search}`, {
+      headers: {
+        'Content-Type': 'application/xml'
+      }
+    })
+    .then(resp => {
+      setImgList([]);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+  },[search])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Search search={search} handleSearch={handleSearch} />
+      <ImgList imgList={imgList} />
     </div>
   );
 }
